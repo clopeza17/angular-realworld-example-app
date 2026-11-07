@@ -28,10 +28,12 @@ jobs:
         run: npm run build
       - name: Preparar Chrome y ChromeDriver
         id: chrome
-        uses: browser-actions/setup-chrome@v2
-        with:
-          chrome-version: stable
-          install-chromedriver: true
+        run: |
+          echo "chrome-path=$(command -v google-chrome)" >> "$GITHUB_OUTPUT"
+          echo "chromedriver-path=$(command -v chromedriver)" >> "$GITHUB_OUTPUT"
+          google-chrome --version
+          chromedriver --version
+          google-chrome --headless=new --dump-dom about:blank
       - name: Ejecutar las pruebas E2E existentes
         run: npm run e2e -- --webdriver-update=false
         env:
