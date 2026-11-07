@@ -9,8 +9,13 @@ exports.config = {
     './e2e/**/*.e2e-spec.ts'
   ],
   capabilities: {
-    'browserName': 'chrome'
+    'browserName': 'chrome',
+    'goog:chromeOptions': {
+      binary: process.env.CHROME_BIN,
+      args: process.env.CI ? ['--headless=new', '--disable-dev-shm-usage', '--window-size=1280,800'] : []
+    }
   },
+  chromeDriver: process.env.CHROMEDRIVER_PATH,
   directConnect: true,
   baseUrl: 'http://localhost:4200/',
   framework: 'jasmine',
